@@ -1,0 +1,26 @@
+
+<div class="shadowed-box">
+  <div class="box-header">
+    <div class="row">
+      <div class="col-sm-7">
+        <span>YOUR TEAM</span>
+        <span class="ml-1">({{teamMembers.length}})</span>
+      </div>
+
+      <div class="col-sm-5 text-right">
+        <a class="text-primary"> <!-- modal trigger -->
+          <i class="mr-2">(icon)</i>
+          ADD NEW USER
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row box-content">
+    <div class="col-sm-4" *ngFor="let teamMember of teamMembers">
+      <team-member [teamMember]="teamMember" class="mb-3"></team-member>
+    </div>
+  </div>
+
+  <add-team-member-modal></add-team-member-modal>
+</div>

@@ -1,0 +1,20 @@
+.shadowed-box {
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, .1);
+  position: relative;
+  min-height: 70px;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.box-header {
+  padding: 20px 30px;
+  border-radius: 8px 8px 0 0;
+  background-color: #f9f9f9;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.box-content {
+  padding: 30px;
+}
