@@ -8,8 +8,7 @@
       </div>
 
       <div class="col-sm-5 text-right">
-        <a class="text-primary"> <!-- modal trigger -->
-          <i class="mr-2">(icon)</i>
+        <a class="text-primary" (click)="openModal()"> <!-- modal trigger -->
           ADD NEW USER
         </a>
       </div>
@@ -22,5 +21,5 @@
     </div>
   </div>
 
-  <add-team-member-modal></add-team-member-modal>
+  <add-team-member-modal #modal></add-team-member-modal>
 </div>

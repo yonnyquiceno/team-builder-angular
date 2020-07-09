@@ -10,6 +10,8 @@ import { HelloWorldComponent } from './hello-world/hello-world.component';
 import { TeamMemberComponent } from './team-member/team-member.component';
 import { TeamBuilderService } from './team-builder/team-builder.service';
 import { AddTeamMemberModalComponent } from './add-team-member-modal/add-team-member-modal.component'
+import { StoreModule } from '@ngrx/store';
+import { teamBuilderReducer } from './team-builder/team-builder.reducer';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { AddTeamMemberModalComponent } from './add-team-member-modal/add-team-me
     HttpClientModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forRoot({ teamMembers: teamBuilderReducer })
   ],
   providers: [
     TeamBuilderService

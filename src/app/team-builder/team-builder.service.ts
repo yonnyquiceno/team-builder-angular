@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 import { TeamMember } from '../team-member/team-member'
@@ -20,6 +20,13 @@ export class TeamBuilderService {
 
   createTeamMember(teamMember: TeamMember) {
     return this.http.post<TeamMember>('http://localhost:3000/team_members', teamMember, {observe: 'response'})
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  deleteTeamMember(teamMember: TeamMember) {
+    return this.http.delete<TeamMember>(`http://localhost:3000/team_members/${teamMember.id}`, {observe: 'response'})
       .pipe(
         catchError(this.handleError)
       );

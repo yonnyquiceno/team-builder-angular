@@ -1,20 +1,24 @@
 import {Component} from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { TeamBuilderService } from '../team-builder/team-builder.service';
+import { TeamMember } from '../team-member/team-member';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { addTeamMember } from "../team-builder/team-builder.actions";
+import { Store } from '@ngrx/store';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'add-team-member-modal',
   templateUrl: './add-team-member-modal.component.html'
 })
 export class AddTeamMemberModalComponent {
-  closeResult = '';
   addTeamMemberForm: FormGroup
 
   constructor(
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
-    private service: TeamBuilderService
+    private service: TeamBuilderService,
+    private store: Store<{ teamMembers: TeamMember[] }>,
   ) {
     this.createForm();
   }
@@ -24,35 +28,24 @@ export class AddTeamMemberModalComponent {
 
     modalRef.result.then((result) => {
       this.createTeamMember()
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+    })
   }
 
   private createForm() {
     this.addTeamMemberForm = this.formBuilder.group({
       name: '',
-      job_title: '',
+      jobTitle: '',
       photo: ''
     });
   }
 
   private createTeamMember() {
-    this.service.createTeamMember(this.addTeamMemberForm.value).subscribe((response: any) => {
-      if (response.ok) {
-        //this.teamMembers = [data]
-      }
+    this.service.createTeamMember(this.snakeCase(this.addTeamMemberForm.value)).subscribe((response: any) => {
+      this.store.dispatch(addTeamMember({teamMember: {id: response.body.id, ...this.addTeamMemberForm.value}}));
     });
+  }
+
+  private snakeCase(obj) {
+    return _.mapKeys(obj, (value, key) => _.snakeCase(key))
   }
 }

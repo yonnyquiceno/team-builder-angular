@@ -9,7 +9,7 @@
     <div class="col-md-8">
       <div class="font-weight-bold"><a [href]="teamMember.photo" target="_blank">{{teamMember.name}}</a></div>
       <div class="text-secondary">{{teamMember.jobTitle || '&mdash;'}}</div>
-      <div><a (click)="removeUser()">Remove User</a></div>
+      <div><a href='' (click)="removeTeamMember($event)">Remove User</a></div>
     </div>
   </div>
 </div>
